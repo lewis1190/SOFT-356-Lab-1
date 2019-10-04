@@ -8,7 +8,7 @@
 #include <string>
 using namespace std;
 
-string genMap(char*** value);
+string genMap(string theMap[][31]);
 int drawMap();
 
 struct PlayerLoc {
@@ -18,13 +18,13 @@ struct PlayerLoc {
 
 int main()
 {
-	char** gameMap[10][31];
+	string theMap[10][31];
 
-	string ourMap = genMap(&gameMap);
-	drawMap();
+	theMap = genMap(theMap);
+ 	drawMap();
 }
 
-string genMap(char*** gameMap[10][31]) 
+string genMap(string theMap[][31])
 {
 	string line;
 	std::ifstream inFile;
@@ -51,6 +51,12 @@ string genMap(char*** gameMap[10][31])
 			for (char& c : line) {
 				//cout << c << endl;
 				gameMap[lineNo][charNo] = c;
+
+				if (c == 'S')
+				{
+					location.xPos = lineNo;
+					location.yPos = charNo;
+				}
 				charNo++;
 			};
 
@@ -60,16 +66,19 @@ string genMap(char*** gameMap[10][31])
 			else {
 				cout << "stop";
 			}
+
 		}
 
 		cout << "map rendered" << endl;
 
 		if (&location)
 		{
-			cout << "Found player at: ";
-			cout << "x Pos: " << location.xPos;
-			cout << "y Pos: " << location.yPos;
+			cout << "Found player at: " << endl;
+			cout << "x Pos: " << location.xPos << endl;
+			cout << "y Pos: " << location.yPos << endl;
 		};
+
+		return **theMap;
 	};
 }
 
